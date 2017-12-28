@@ -1,5 +1,6 @@
 from MatrixBuilder import MapState
 import pygame
+from enum import Enum
 
 class Point:
     def __init__(self, row, column):
@@ -12,27 +13,58 @@ class Snake:
         centerColumn = len(matrix[centerRow]) // 2
 
         matrix[centerRow][centerColumn] = MapState.SNAKE
-        self.head = Point(centerRow, centerColumn)
+        matrix[centerRow][centerColumn+1] = MapState.SNAKE
+        head = Point(centerRow, centerColumn)
+        tail = Point(centerRow, centerColumn+1)
         self.matrix = matrix
-        self.lastDirection = pygame.K_LEFT
+        self.currentDirection = pygame.K_LEFT
+        self.body = [head, tail]
+
 
     def setDirection(self, key):
         if key != pygame.K_LEFT and key != pygame.K_RIGHT and key != pygame.K_UP and key != pygame.K_DOWN:
             return
+        elif key == pygame.K_UP and self.currentDirection == pygame.K_DOWN:
+            return
+        elif key == pygame.K_DOWN and self.currentDirection == pygame.K_UP:
+            return
+        elif key == pygame.K_LEFT and self.currentDirection == pygame.K_RIGHT:
+            return
+        elif key == pygame.K_RIGHT and self.currentDirection == pygame.K_LEFT:
+            return
         else:
-            self.lastDirection = key
+            self.currentDirection = key
 
     def move(self):
-        if self.lastDirection == pygame.K_LEFT:
-            self.head.column -= 1
-            self.matrix[self.head.row][self.head.column] = MapState.SNAKE
-        elif self.lastDirection == pygame.K_RIGHT:
-            self.head.column += 1
-            self.matrix[self.head.row][self.head.column] = MapState.SNAKE
-        elif self.lastDirection == pygame.K_UP:
-            self.head.row -= 1
-            self.matrix[self.head.row][self.head.column] = MapState.SNAKE
-        elif self.lastDirection == pygame.K_DOWN:
-            self.head.row += 1
-            self.matrix[self.head.row][self.head.column] = MapState.SNAKE
+        if self.currentDirection == pygame.K_LEFT:
+            self.body.insert(0, Point(self.body[0].row, self.body[0].column-1))
 
+        elif self.currentDirection == pygame.K_RIGHT:
+            self.body.insert(0, Point(self.body[0].row, self.body[0].column + 1))
+
+        elif self.currentDirection == pygame.K_UP:
+            self.body.insert(0, Point(self.body[0].row-1, self.body[0].column))
+
+        elif self.currentDirection == pygame.K_DOWN:
+            self.body.insert(0, Point(self.body[0].row+1, self.body[0].column))
+
+        if self.matrix[self.body[0].row][self.body[0].column] == MapState.WALL or self.matrix[self.body[0].row][self.body[0].column] == MapState.SNAKE:
+            return MoveResult.isDead
+
+
+        if self.matrix[self.body[0].row][self.body[0].column] != MapState.APPLE:
+            self.matrix[self.body[0].row][self.body[0].column] = MapState.SNAKE
+            self.matrix[self.body[-1].row][self.body[-1].column] = MapState.EMPTY
+            del self.body[-1]
+            # return MoveResult.pełzpełzpełz
+
+        else:
+            self.matrix[self.body[0].row][self.body[0].column] = MapState.SNAKE
+            return MoveResult.appleEaten
+
+
+
+class MoveResult(Enum):
+    appleEaten = 1
+    # pełzpełzpełz = 2
+    isDead = 3

@@ -25,5 +25,3 @@ WINDOW_HEIGHT = 600
 WINDOW_COLOR = (255, 131, 0)
 
 screen = pygame.display.set_mode((WINDOW_WIDTH,WINDOW_HEIGHT), 0, 32)
-
-

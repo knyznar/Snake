@@ -2,27 +2,38 @@ import pygame
 from Renderer import *
 from MatrixBuilder import *
 from Snake import *
+from Apple import *
 
 pygame.init()
 
 clock = pygame.time.Clock()
 
-matrix = buildSquareMatrix(19)
-snake = Snake(matrix)
+def game():
+    matrix = buildSquareMatrix(19)
+    snake = Snake(matrix)
+    putApple(matrix)
+    while(True):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:    # przechwyć zamknięcie okna
+                pygame.quit()
+                return
+            if event.type == pygame.KEYDOWN:
+                snake.setDirection(event.key)
 
+        moveResult = snake.move()
 
-while(True):
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:    # przechwyć zamknięcie okna
+        if moveResult == MoveResult.isDead:
+            print("Przegrołeś")
             pygame.quit()
-            sys.exit()
+            return
 
-        if event.type == pygame.KEYDOWN:
-            snake.setDirection(event.key)
+        if moveResult == MoveResult.appleEaten:
+            putApple(matrix)
 
-    snake.move()
+        screen.fill(WINDOW_COLOR)
+        rysuj_macierz(matrix)
+        pygame.display.flip()
 
-    screen.fill(WINDOW_COLOR)
-    msElapsed = clock.tick(5)
-    rysuj_macierz(matrix)
-    pygame.display.flip()
+        clock.tick(10)
+
+game()
