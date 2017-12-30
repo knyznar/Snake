@@ -1,7 +1,7 @@
 import pygame
 from MatrixBuilder import MapState
 
-def rysuj_macierz(macierz):
+def render(macierz):
     smaller_dimension = min(WINDOW_WIDTH, WINDOW_HEIGHT)
     box_size = (smaller_dimension - 100)//len(macierz)
     for i in range (len(macierz)):

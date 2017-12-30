@@ -56,7 +56,6 @@ class Snake:
             self.matrix[self.body[0].row][self.body[0].column] = MapState.SNAKE
             self.matrix[self.body[-1].row][self.body[-1].column] = MapState.EMPTY
             del self.body[-1]
-            # return MoveResult.pełzpełzpełz
 
         else:
             self.matrix[self.body[0].row][self.body[0].column] = MapState.SNAKE
@@ -66,5 +65,4 @@ class Snake:
 
 class MoveResult(Enum):
     appleEaten = 1
-    # pełzpełzpełz = 2
     isDead = 3
