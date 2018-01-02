@@ -1,18 +1,20 @@
 import pygame
 from MatrixBuilder import MapState
 
-def render(macierz):
+def render(matrix):
     smaller_dimension = min(WINDOW_WIDTH, WINDOW_HEIGHT)
-    box_size = (smaller_dimension - 100)//len(macierz)
-    for i in range (len(macierz)):
-        for j in range (len(macierz[i])):
-            box = pygame.Rect(j * box_size + 50, i * box_size + 50, box_size-1, box_size-1)
+    box_size = (smaller_dimension - 100)//len(matrix)
+    matrix_size = box_size * len(matrix)
 
-            if macierz[i][j] == MapState.EMPTY:
+    for i in range (len(matrix)):
+        for j in range (len(matrix[i])):
+            box = pygame.Rect(j * box_size + (smaller_dimension - matrix_size)/2, i * box_size + (smaller_dimension - matrix_size)/2, box_size-1, box_size-1)
+
+            if matrix[i][j] == MapState.EMPTY:
                 color = (200, 100, 10)
-            elif macierz[i][j] == MapState.WALL:
+            elif matrix[i][j] == MapState.WALL:
                 color = (10, 200, 100)
-            elif macierz[i][j] == MapState.APPLE:
+            elif matrix[i][j] == MapState.APPLE:
                 color = (50, 255, 10)
             else:
                 color = (0, 150, 255)

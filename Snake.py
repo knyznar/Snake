@@ -19,6 +19,7 @@ class Snake:
         self.matrix = matrix
         self.currentDirection = pygame.K_LEFT
         self.body = [head, tail]
+        self.currentScore = 0
 
 
     def setDirection(self, key):
@@ -59,6 +60,7 @@ class Snake:
 
         else:
             self.matrix[self.body[0].row][self.body[0].column] = MapState.SNAKE
+            self.currentScore += 1
             return MoveResult.appleEaten
 
 
