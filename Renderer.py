@@ -6,8 +6,8 @@ def render(matrix):
     box_size = (smaller_dimension - 100)//len(matrix)
     matrix_size = box_size * len(matrix)
 
-    for i in range (len(matrix)):
-        for j in range (len(matrix[i])):
+    for i in range(len(matrix)):
+        for j in range(len(matrix[i])):
             box = pygame.Rect(j * box_size + (smaller_dimension - matrix_size)/2, i * box_size + (smaller_dimension - matrix_size)/2, box_size-1, box_size-1)
 
             if matrix[i][j] == MapState.EMPTY:
@@ -15,7 +15,7 @@ def render(matrix):
             elif matrix[i][j] == MapState.WALL:
                 color = (10, 200, 100)
             elif matrix[i][j] == MapState.APPLE:
-                color = (50, 255, 10)
+                color = (255, 0, 10)
             else:
                 color = (0, 150, 255)
 

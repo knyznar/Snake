@@ -37,6 +37,25 @@ def buildSquareMatrixLevel2(size):
         tab[i][size-7] = MapState.WALL
     return tab
 
+def buildSquareMatrixLevel3(size):
+    tab = buildSquareMatrix(size)
+    for i in range(size//4, size - size//4):
+        tab[size//3 - 2][i] = MapState.WALL
+        tab[size//3 - 1][i] = MapState.WALL
+        tab[size - size//3][i] = MapState.WALL
+        tab[size - size//3 + 1][i] = MapState.WALL
+    for i in range(3):
+        tab[size//3 + i][size//4] = MapState.WALL
+        tab[size//3 + i][size//4 + 1] = MapState.WALL
+        tab[size//3 + i][size - size//4 - 1] = MapState.WALL
+        tab[size//3 + i][size - size//4 - 2] = MapState.WALL
+        tab[size - size//3 - i-1][size//4] = MapState.WALL
+        tab[size - size//3 - i-1][size//4 + 1] = MapState.WALL
+        tab[size - size//3 - i-1][size - size//4 - 1] = MapState.WALL
+        tab[size - size//3 - i-1][size - size//4 - 2] = MapState.WALL
+    return tab
+
+
 class MapState(Enum):
     EMPTY = 0
     SNAKE = 1
