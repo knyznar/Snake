@@ -23,6 +23,7 @@ def buildSquareMatrixLevel1(size):
         tab[i+1][(size-2)//2+1] = MapState.WALL
     return tab
 
+
 def buildSquareMatrixLevel2(size):
     tab = buildSquareMatrix(size)
     for i in range((size-2)//2-1):
