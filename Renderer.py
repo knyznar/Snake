@@ -22,8 +22,15 @@ def render(matrix):
             pygame.draw.rect(screen, color, box)
 
 
+def printText(text, rect, screen, size):
+    font = pygame.font.SysFont("comicsansms", size)
+    text = font.render(text, True, (255, 255, 255))
+    horizontalMargin = (rect.width - text.get_width()) // 2
+    verticalMargin = (rect.height - text.get_height()) // 2
+    screen.blit(text, (rect.x + horizontalMargin, rect.y + verticalMargin))
+
 WINDOW_WIDTH = 600
-WINDOW_HEIGHT = 600
+WINDOW_HEIGHT = 650
 WINDOW_COLOR = (255, 131, 0)
 
 screen = pygame.display.set_mode((WINDOW_WIDTH,WINDOW_HEIGHT), 0, 32)

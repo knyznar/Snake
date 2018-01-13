@@ -18,7 +18,7 @@ def buildSquareMatrixLevel1(size):
     for i in range((size-2)//3):
         tab[i+1][(size-2)//2] = MapState.WALL
         tab[i+1][(size-2)//2+1] = MapState.WALL
-    for i in range(math.ceil(((size-2)/3)*2), size-1):
+    for i in range(int(math.ceil(((size-2)/3)*2)), size-1):
         tab[i+1][(size-2)//2] = MapState.WALL
         tab[i+1][(size-2)//2+1] = MapState.WALL
     return tab
