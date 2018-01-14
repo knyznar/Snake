@@ -11,13 +11,13 @@ def render(matrix):
             box = pygame.Rect(j * box_size + (smaller_dimension - matrix_size)/2, i * box_size + (smaller_dimension - matrix_size)/2, box_size-1, box_size-1)
 
             if matrix[i][j] == MapState.EMPTY:
-                color = (200, 100, 10)
+                color = (223, 112, 12)
             elif matrix[i][j] == MapState.WALL:
-                color = (10, 200, 100)
+                color = (104, 54, 0)
             elif matrix[i][j] == MapState.APPLE:
                 color = (255, 0, 10)
             else:
-                color = (0, 150, 255)
+                color = (34, 213, 9)
 
             pygame.draw.rect(screen, color, box)
 

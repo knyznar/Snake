@@ -16,8 +16,6 @@ def game(gameboard):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 return
-            if event.type == pygame.K_p:
-                pauseGame()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_p:
                     pauseGame()
@@ -52,10 +50,11 @@ buttonWidth = WINDOW_WIDTH // 3
 buttonHeight = WINDOW_HEIGHT // 15
 
 def showMenu():
-    easyButton = Button((WINDOW_WIDTH - buttonWidth) // 2, (WINDOW_HEIGHT - buttonHeight) // 3 + 20, buttonWidth, buttonHeight, "Easy")
-    mediumButton = Button(easyButton.x, easyButton.y + easyButton.height + 10, buttonWidth, buttonHeight, "Medium")
-    hardButton = Button(easyButton.x, easyButton.y + 2*(easyButton.height + 10), buttonWidth, buttonHeight, "Hard")
-    quitButton = Button(easyButton.x, easyButton.y + 3*(easyButton.height + 10), buttonWidth, buttonHeight, "Quit")
+    startButton = Button((WINDOW_WIDTH - buttonWidth) // 2, (WINDOW_HEIGHT - buttonHeight) // 3 + 20, buttonWidth, buttonHeight, "Start Game")
+    map1Button = Button(startButton.x, startButton.y + startButton.height + 10, buttonWidth, buttonHeight, "Map 1")
+    map2Button = Button(startButton.x, startButton.y + 2*(startButton.height + 10), buttonWidth, buttonHeight, "Map 2")
+    map3Button = Button(startButton.x, startButton.y + 3*(startButton.height + 10), buttonWidth, buttonHeight, "Map 3")
+    quitButton = Button(startButton.x, startButton.y + 4*(startButton.height + 10), buttonWidth, buttonHeight, "Quit")
 
     titleImage = pygame.image.load('snakeTitle.png')
 
@@ -69,15 +68,19 @@ def showMenu():
                 return
 
             elif event.type == pygame.MOUSEBUTTONUP:
-                if easyButton.isInside(pygame.mouse.get_pos()):
+                if startButton.isInside(pygame.mouse.get_pos()):
                     gameboard = buildSquareMatrix(30)
                     newScore = game(gameboard)
 
-                elif mediumButton.isInside(pygame.mouse.get_pos()):
+                elif map1Button.isInside(pygame.mouse.get_pos()):
                     gameboard = buildSquareMatrixLevel1(30)
                     newScore = game(gameboard)
 
-                elif hardButton.isInside(pygame.mouse.get_pos()):
+                elif map2Button.isInside(pygame.mouse.get_pos()):
+                    gameboard = buildSquareMatrixLevel2(30)
+                    newScore = game(gameboard)
+
+                elif map3Button.isInside(pygame.mouse.get_pos()):
                     gameboard = buildSquareMatrixLevel3(30)
                     newScore = game(gameboard)
 
@@ -93,14 +96,13 @@ def showMenu():
         screen.blit(titleImage, ((WINDOW_WIDTH-300)//2, 40))
         pygame.display.set_caption('Snake')
 
-
-
         bestScoreFrame = pygame.Rect(0, WINDOW_HEIGHT - 100, WINDOW_WIDTH, 50)
         printText("Best score: " + str(bestScore), bestScoreFrame, screen, 17)
 
-        easyButton.draw(screen)
-        mediumButton.draw(screen)
-        hardButton.draw(screen)
+        startButton.draw(screen)
+        map1Button.draw(screen)
+        map2Button.draw(screen)
+        map3Button.draw(screen)
         quitButton.draw(screen)
         getBestScore()
         pygame.display.flip()

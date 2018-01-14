@@ -39,19 +39,26 @@ class Snake:
     def move(self):
         if self.currentDirection == pygame.K_LEFT:
             self.body.insert(0, Point(self.body[0].row, self.body[0].column-1))
+            if self.body[0].column == -1:
+                self.body[0].column = len(self.matrix)-1
 
         elif self.currentDirection == pygame.K_RIGHT:
             self.body.insert(0, Point(self.body[0].row, self.body[0].column + 1))
+            if self.body[0].column == len(self.matrix):
+                self.body[0].column = 0
 
         elif self.currentDirection == pygame.K_UP:
-            self.body.insert(0, Point(self.body[0].row-1, self.body[0].column))
+            self.body.insert(0, Point(self.body[0].row - 1, self.body[0].column))
+            if self.body[0].row == -1:
+                self.body[0].row = len(self.matrix)-1
 
         elif self.currentDirection == pygame.K_DOWN:
-            self.body.insert(0, Point(self.body[0].row+1, self.body[0].column))
+            self.body.insert(0, Point(self.body[0].row + 1, self.body[0].column))
+            if self.body[0].row == len(self.matrix):
+                self.body[0].row = 0
 
         if self.matrix[self.body[0].row][self.body[0].column] == MapState.WALL or self.matrix[self.body[0].row][self.body[0].column] == MapState.SNAKE:
             return MoveResult.isDead
-
 
         if self.matrix[self.body[0].row][self.body[0].column] != MapState.APPLE:
             self.matrix[self.body[0].row][self.body[0].column] = MapState.SNAKE
